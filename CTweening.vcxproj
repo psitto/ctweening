@@ -23,6 +23,7 @@
     <ClInclude Include="src\Tween.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Easing.c" />
     <ClCompile Include="src\Tween.c" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

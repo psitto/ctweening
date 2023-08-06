@@ -26,5 +26,8 @@
     <ClCompile Include="src\Tween.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\Easing.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
