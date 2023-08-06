@@ -13,11 +13,20 @@ typedef struct twn_Motion
 } twn_Motion;
 
 twn_Player* twn_make_player(float* target, twn_Motion* motion, time_t duration);
-void twn_play(twn_Player* player);
-void twn_pause(twn_Player* player);
-void twn_resume(twn_Player* player);
-void twn_end(twn_Player* player);
-void twn_update(twn_Player* player, time_t dt);
-bool twn_is_active(twn_Player* player);
+void twn_play(twn_Player* p);
+void twn_pause(twn_Player* p);
+void twn_resume(twn_Player* p);
+void twn_end(twn_Player* p);
+void twn_reset(twn_Player* p);
+void twn_update(twn_Player* p, time_t dt);
+float* twn_get_target(twn_Player* p);
+void twn_set_target(twn_Player* p, float* target);
+twn_Motion* twn_get_motion(twn_Player* p);
+void twn_set_motion(twn_Player* p, twn_Motion* motion);
+time_t twn_get_elapsed_time(twn_Player* p);
+void twn_jump(twn_Player* p, time_t point);
+time_t twn_get_duration(twn_Player* p);
+void twn_set_duration(twn_Player* p, time_t duration);
+bool twn_is_active(twn_Player* p);
 
 #endif
