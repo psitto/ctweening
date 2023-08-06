@@ -12,7 +12,8 @@ typedef struct twn_Motion
 	easing_fp easing;
 } twn_Motion;
 
-twn_Player* twn_make_player(float* target, twn_Motion* motion, time_t duration);
+twn_Player* twn_make_player();
+twn_Player* twn_make_player_ex(float* target, twn_Motion* motion, time_t duration);
 void twn_play(twn_Player* p);
 void twn_pause(twn_Player* p);
 void twn_resume(twn_Player* p);

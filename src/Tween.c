@@ -8,7 +8,17 @@ struct twn_Player
 	bool running;
 };
 
-twn_Player* twn_make_player(float* target, twn_Motion* motion, time_t duration)
+twn_Player* twn_make_player()
+{
+	twn_Player* p = calloc(1, sizeof(twn_Player));
+	if (!p)
+	{
+		return NULL;
+	}
+	return p;
+}
+
+twn_Player* twn_make_player_ex(float* target, twn_Motion* motion, time_t duration)
 {
 	twn_Player* p = malloc(sizeof(twn_Player));
 	if (!p)
@@ -51,7 +61,7 @@ void twn_reset(twn_Player* p)
 {
 	if (p->motion)
 	{
-	*p->target = p->motion->from;
+		*p->target = p->motion->from;
 	}
 	p->elapsed_time = 0;
 	p->running = false;
