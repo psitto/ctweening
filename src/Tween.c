@@ -49,7 +49,10 @@ void twn_end(twn_Player* p)
 
 void twn_reset(twn_Player* p)
 {
+	if (p->motion)
+	{
 	*p->target = p->motion->from;
+	}
 	p->elapsed_time = 0;
 	p->running = false;
 }
