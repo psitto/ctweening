@@ -5,6 +5,8 @@ struct twn_Player
 	float* target;
 	twn_Motion* motion;
 	time_t duration, elapsed_time;
+	callback_fp callback;
+	int id;
 	bool running;
 };
 
@@ -15,6 +17,7 @@ twn_Player* twn_make_player()
 	{
 		return NULL;
 	}
+	p->id = get_unique_player_id();
 	return p;
 }
 
@@ -30,6 +33,8 @@ twn_Player* twn_make_player_ex(float* target, twn_Motion* motion, time_t duratio
 	twn_set_duration(p, duration);
 	p->elapsed_time = 0;
 	p->running = false;
+	p->callback = NULL;
+	p->id = get_unique_player_id();
 	return p;
 }
 
@@ -51,6 +56,15 @@ void twn_resume(twn_Player* p)
 }
 
 void twn_end(twn_Player* p)
+{
+	twn_end_no_callback(p);
+	if (p->callback)
+	{
+		p->callback(p);
+	}
+}
+
+void twn_end_no_callback(twn_Player* p)
 {
 	*p->target = p->motion->to;
 	p->elapsed_time = p->duration;
@@ -77,9 +91,7 @@ void twn_update(twn_Player* p, time_t dt)
 	p->elapsed_time += dt;
 	if (p->elapsed_time >= p->duration)
 	{
-		p->elapsed_time = p->duration;
-		*p->target = motion->to;
-		p->running = false;
+		twn_end(p);
 		return;
 	}
 	if (p->elapsed_time < 0)
@@ -131,7 +143,28 @@ void twn_set_duration(twn_Player* p, time_t duration)
 	p->duration = duration > 0 ? duration : 0;
 }
 
+callback_fp twn_get_callback(twn_Player* p)
+{
+	return p->callback;
+}
+
+void twn_set_callback(twn_Player* p, callback_fp cb_f)
+{
+	p->callback = cb_f;
+}
+
+int twn_get_player_id(twn_Player* p)
+{
+	return p->id;
+}
+
 bool twn_is_active(twn_Player* p)
 {
 	return p->running;
+}
+
+static int get_unique_player_id()
+{
+	static int p_id = 0;
+	return p_id++;
 }
